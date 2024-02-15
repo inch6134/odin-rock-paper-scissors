@@ -1,0 +1,46 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+div {
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+#button-container {
+  margin-top: 30px;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+button {
+  height: 90px;
+  width: 90px;
+  font-size: 72px;
+}
+
+#score-counter {
+    text-align: center;
+    flex-direction: column;
+}
+
+#scores {
+    justify-content: space-evenly;
+}
+
+#player-score {
+    position: relative;
+}
+
+#results {
+    flex-direction: column;
+}
