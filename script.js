@@ -1,45 +1,35 @@
-function getComputerChoice() {
-  let remainder = Math.floor(Math.random() * 100) % 3;
-  switch (remainder) {
-    case 0:
-      return "rock";
+// Global variables
 
-    case 1:
-      return "paper";
-
-    case 2:
-      return "scissors";
-  }
-}
-
-function playRound(playerSelection, computerSelection) {
-  let player = playerSelection.toLowerCase();
-  let computer = computerSelection;
-
-  if (player === computer) {
-    return `Tie!`;
-  } else if (
-    (player === "rock" && computer === "paper") ||
-    (player === "paper" && computer === "scissors") ||
-    (player === "scissors" && computer === "rock")
-  ) {
-    return `You lose! ${computer} beats ${player}`;
-  } else if (
-    (player === "rock" && computer === "scissors") ||
-    (player === "paper" && computer === "rock") ||
-    (player === "scissors" && computer === "paper")
-  ) {
-    return `You win! ${player} beats ${computer}`;
-  } else {
-    return "Please enter a valid hand.";
-  }
-}
-
-function game() {
   let playerWinCounter = 0;
   let computerWinCounter = 0;
   let gameCounter = 1;
 
+// references to HTML elements
+
+const rockButton = document.querySelector("#rock")
+const paperButton = document.querySelector("#paper");
+const scissorsButton = document.querySelector("#scissors");
+
+// Event listeners for buttons
+
+rockButton.addEventListener("click", ()=>
+  playRound("rock", getComputerChoice)
+);
+
+paperButton.addEventListener("click", ()=>
+  playRound("paper", getComputerChoice)
+);
+
+scissorsButton.addEventListener("click", ()=>
+  playRound("scissors", getComputerChoice)
+);
+
+game();
+
+// main function
+
+function game() {
+  
   do {
     const playerSelection = prompt("Rock Paper Scissors!");
     const computerSelection = getComputerChoice();
@@ -72,4 +62,40 @@ function game() {
   }
 }
 
-game();
+// Utility functions
+
+function getComputerChoice() {
+  let remainder = Math.floor(Math.random() * 100) % 3;
+  switch (remainder) {
+    case 0:
+      return "rock";
+
+    case 1:
+      return "paper";
+
+    case 2:
+      return "scissors";
+  }
+}
+
+
+function playRound(playerSelection, computerSelection) {
+
+  if (playerSelection === computerSelection) {
+    return `Tie!`;
+  } else if (
+    (playerSelection === "rock" && computerSelection === "paper") ||
+    (playerSelection === "paper" && computerSelection === "scissors") ||
+    (playerSelection === "scissors" && computerSelection === "rock")
+  ) {
+    return `You lose! ${computerSelection} beats ${playerSelection}`;
+  } else if (
+    (playerSelection === "rock" && computerSelection === "scissors") ||
+    (playerSelection === "paper" && computerSelection === "rock") ||
+    (playerSelection === "scissors" && computerSelection === "paper")
+  ) {
+    return `You win! ${playerSelection} beats ${computerSelection}`;
+  } else {
+    return "Please enter a valid hand.";
+  }
+}
