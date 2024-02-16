@@ -9,6 +9,8 @@ const selectionsDOM = document.querySelector("#selections");
 const playerScoreDOM = document.querySelector("#player-score");
 const computerScoreDOM = document.querySelector("#computer-score");
 const resultsDOM = document.querySelector("#results");
+const restartButtonDOM = document.querySelector("#restart-button");
+const newGameButtonDOM = document.querySelector("#new-game-button");
 
 // Event listeners for buttons
 
@@ -24,15 +26,17 @@ function clickScissors() {
   onClick("scissors");
 }
 
-rockButtonDOM.addEventListener("click", clickRock);
-
-paperButtonDOM.addEventListener("click", clickPaper);
-
-scissorsButtonDOM.addEventListener("click", clickScissors);
-
-game();
+function activateEventListeners () {
+  rockButtonDOM.addEventListener("click", clickRock);
+  paperButtonDOM.addEventListener("click", clickPaper);
+  scissorsButtonDOM.addEventListener("click", clickScissors);
+  restartButtonDOM.addEventListener("click", game);
+  newGameButtonDOM.addEventListener("click", game);  
+}
 
 // main function
+game();
+
 function game() {
   state = {
     playerWinCounter: 0,
@@ -48,6 +52,10 @@ function game() {
   playerScoreDOM.innerHTML = "Player: 0";
   computerScoreDOM.innerHTML = "Computer: 0";
   resultsDOM.innerHTML = "";
+  restartButtonDOM.style.visibility = "visible";
+  restartButtonDOM.style.height = "auto";
+
+  activateEventListeners();
 }
 
 // Utility functions
@@ -141,4 +149,9 @@ function endGame() {
   rockButtonDOM.removeEventListener("click", clickRock);
   paperButtonDOM.removeEventListener("click", clickPaper);
   scissorsButtonDOM.removeEventListener("click", clickScissors);
+  restartButtonDOM.style.visibility = "hidden";
+  restartButtonDOM.style.height = "0px";
+  resultsDOM.prepend(newGameButtonDOM);
+  newGameButtonDOM.style.visibility = "visible";
+  newGameButtonDOM.style.height = "auto";
 }

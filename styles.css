@@ -12,25 +12,33 @@ div {
   box-sizing: border-box;
   display: flex;
   width: 100%;
-  margin-bottom: 30px;
   text-align: center;
 }
 
 #button-container {
-  margin-top: 30px;
+  margin: 30px;
+  width: 60%;
   justify-content: space-evenly;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
 }
 
-button {
+#rock,
+#paper,
+#scissors {
   height: 90px;
   width: 90px;
   font-size: 72px;
 }
 
+#selections {
+  box-sizing: border-box;
+  height: 23px;
+}
+
 #score-counter {
     text-align: center;
     flex-direction: column;
+    width: 70%;
 }
 
 #scores {
@@ -44,4 +52,10 @@ button {
 #results-container,
 #results {
     flex-direction: column;
+    align-items: center;
+}
+
+#new-game-button {
+  visibility: hidden;
+  height: 0px;
 }
