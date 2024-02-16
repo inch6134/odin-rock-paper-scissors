@@ -54,7 +54,9 @@ function game() {
 
   // reset HTML elements
   selectionsDOM.innerHTML = "";
-
+  playerScoreDOM.innerHTML = "Player: 0";
+  computerScoreDOM.innerHTML = "Computer: 0";
+  resultsDOM.innerHTML = "";
 }
 
 // Utility functions
@@ -122,6 +124,8 @@ function countRound() {
 }
 
 function keepScore() {
+  playerScoreDOM.innerHTML = `Player: ${state.playerWinCounter}`;
+  computerScoreDOM.innerHTML = `Computer: ${state.computerWinCounter}`;
   const winnerText = document.createElement('h3');
     if (state.playerWinCounter === 3) {
     winnerText.textContent = "Congrats! You Win!";
