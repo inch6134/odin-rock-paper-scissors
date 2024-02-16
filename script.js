@@ -1,7 +1,6 @@
 // Global state
 let state = {};
  
-
 // references to HTML elements
 const rockButtonDOM = document.querySelector("#rock");
 const paperButtonDOM = document.querySelector("#paper");
@@ -12,32 +11,24 @@ const computerScoreDOM = document.querySelector("#computer-score");
 const resultsDOM = document.querySelector("#results");
 
 // Event listeners for buttons
-rockButtonDOM.addEventListener("click", ()=> {
-  state.playerSelection = "rock";
-  state.computerSelection = getComputerChoice();
-  state.outcome = playRound(state.playerSelection, state.computerSelection);
-  displaySelections();
-  countRound();
-  keepScore();
-});
 
-paperButtonDOM.addEventListener("click", ()=> {
-  state.playerSelection = "paper";
-  state.computerSelection = getComputerChoice();
-  state.outcome = playRound(state.playerSelection, state.computerSelection);
-  displaySelections();
-  countRound();
-  keepScore();
-});
+function clickRock() {
+  onClick("rock");
+}
 
-scissorsButtonDOM.addEventListener("click", ()=> {
-  state.playerSelection = "scissors";
-  state.computerSelection = getComputerChoice();
-  state.outcome = playRound(state.playerSelection, state.computerSelection);
-  displaySelections();
-  countRound();
-  keepScore();
-});
+function clickPaper() {
+  onClick("paper");
+}
+
+function clickScissors() {
+  onClick("scissors");
+}
+
+rockButtonDOM.addEventListener("click", clickRock);
+
+paperButtonDOM.addEventListener("click", clickPaper);
+
+scissorsButtonDOM.addEventListener("click", clickScissors);
 
 game();
 
@@ -60,6 +51,15 @@ function game() {
 }
 
 // Utility functions
+
+function onClick(button) {
+  state.playerSelection = button;
+  state.computerSelection = getComputerChoice();
+  state.outcome = playRound(state.playerSelection, state.computerSelection);
+  displaySelections();
+  countRound();
+  keepScore();
+}
 
 function playRound(playerSelection, computerSelection) {
 
@@ -96,7 +96,6 @@ function getComputerChoice() {
   }
 }
 
-
 function displaySelections() {
   selectionsDOM.innerHTML = `Player chose ${state.playerSelection}!\n
   Computer chose ${state.computerSelection}!`;
@@ -127,11 +126,19 @@ function keepScore() {
   playerScoreDOM.innerHTML = `Player: ${state.playerWinCounter}`;
   computerScoreDOM.innerHTML = `Computer: ${state.computerWinCounter}`;
   const winnerText = document.createElement('h3');
-    if (state.playerWinCounter === 3) {
+  if (state.playerWinCounter === 5) {
     winnerText.textContent = "Congrats! You Win!";
     resultsDOM.prepend(winnerText);
-    } else if (state.computerWinCounter === 3) {
+    endGame();
+  } else if (state.computerWinCounter === 5) {
     winnerText.textContent = "Bummer! You Lost!";
     resultsDOM.prepend(winnerText);
+    endGame();
   }
+}
+
+function endGame() {
+  rockButtonDOM.removeEventListener("click", clickRock);
+  paperButtonDOM.removeEventListener("click", clickPaper);
+  scissorsButtonDOM.removeEventListener("click", clickScissors);
 }
