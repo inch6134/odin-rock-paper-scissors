@@ -3,19 +3,22 @@ let state = {};
  
 
 // references to HTML elements
-
 const rockButtonDOM = document.querySelector("#rock");
 const paperButtonDOM = document.querySelector("#paper");
 const scissorsButtonDOM = document.querySelector("#scissors");
 const selectionsDOM = document.querySelector("#selections");
+const playerScoreDOM = document.querySelector("#player-score");
+const computerScoreDOM = document.querySelector("#computer-score");
+const resultsDOM = document.querySelector("#results");
 
 // Event listeners for buttons
-
 rockButtonDOM.addEventListener("click", ()=> {
   state.playerSelection = "rock";
   state.computerSelection = getComputerChoice();
   state.outcome = playRound(state.playerSelection, state.computerSelection);
   displaySelections();
+  countRound();
+  keepScore();
 });
 
 paperButtonDOM.addEventListener("click", ()=> {
@@ -23,6 +26,8 @@ paperButtonDOM.addEventListener("click", ()=> {
   state.computerSelection = getComputerChoice();
   state.outcome = playRound(state.playerSelection, state.computerSelection);
   displaySelections();
+  countRound();
+  keepScore();
 });
 
 scissorsButtonDOM.addEventListener("click", ()=> {
@@ -30,12 +35,13 @@ scissorsButtonDOM.addEventListener("click", ()=> {
   state.computerSelection = getComputerChoice();
   state.outcome = playRound(state.playerSelection, state.computerSelection);
   displaySelections();
+  countRound();
+  keepScore();
 });
 
 game();
 
 // main function
-
 function game() {
   state = {
     playerWinCounter: 0,
@@ -49,45 +55,6 @@ function game() {
   // reset HTML elements
   selectionsDOM.innerHTML = "";
 
-  // do {
-    
-    // move logic to new utility function, call in event listeners
-    // store computerSelection in global variable to call in multiple places
-    // add single line that displays message of current selections
-
-    // const playerSelection = prompt("Rock Paper Scissors!");
-    // const computerSelection = getComputerChoice();
-    // const outcome = playRound(playerSelection, computerSelection);
-    // console.log(`Player chose ${playerSelection}!`);
-    // console.log(`Computer chose ${computerSelection}!`);
-    // console.log(outcome);
-
-
-    // utility function - countRound()
-  //   if (/win/.test(outcome)) {
-  //     playerWinCounter++;
-  //     console.log(`Round ${gameCounter}: Player (${playerWinCounter} wins)`);
-  //     gameCounter++;
-  //   } else if (/lose/.test(outcome)) {
-  //     computerWinCounter++;
-  //     console.log(
-  //       `Round ${gameCounter}: Computer (${computerWinCounter} wins)`
-  //     );
-  //     gameCounter++;
-  //   }
-//  } while (state.playerWinCounter < 3 && computerWinCounter < 3 && gameCounter <= 5);
-
-
-  // utility function - keepScore()
-//   if (playerWinCounter === 3) {
-//     console.log("Congrats! You Win! Final Score: ");
-//     console.log(`Player: ${playerWinCounter}`);
-//     console.log(`Computer: ${computerWinCounter}`);
-//   } else if (computerWinCounter === 3) {
-//     console.log("Bummer! You Lost! Final Score: ");
-//     console.log(`Player: ${playerWinCounter}`);
-//     console.log(`Computer: ${computerWinCounter}`);
-//   }
 }
 
 // Utility functions
@@ -131,4 +98,36 @@ function getComputerChoice() {
 function displaySelections() {
   selectionsDOM.innerHTML = `Player chose ${state.playerSelection}!\n
   Computer chose ${state.computerSelection}!`;
+}
+
+function countRound() {
+  const roundText = document.createElement('p');
+  if (/win/.test(state.outcome)) {
+        state.playerWinCounter++;
+        // console.log(`Round ${state.gameCounter}: Player (${state.playerWinCounter} wins)`);
+        roundText.textContent = `Round ${state.gameCounter}: Player wins!`;
+        resultsDOM.prepend(roundText);
+        state.gameCounter++;
+      } else if (/lose/.test(state.outcome)) {
+        state.computerWinCounter++;
+        roundText.textContent = `Round ${state.gameCounter}: Computer wins!`;
+        resultsDOM.prepend(roundText);
+        state.gameCounter++;
+      }
+      else if (/Tie/.test(state.outcome)) {
+        roundText.textContent = `Round ${state.gameCounter}: Tie!`;
+        resultsDOM.prepend(roundText);
+        state.gameCounter++;
+      }
+}
+
+function keepScore() {
+  const winnerText = document.createElement('h3');
+    if (state.playerWinCounter === 3) {
+    winnerText.textContent = "Congrats! You Win!";
+    resultsDOM.prepend(winnerText);
+    } else if (state.computerWinCounter === 3) {
+    winnerText.textContent = "Bummer! You Lost!";
+    resultsDOM.prepend(winnerText);
+  }
 }
